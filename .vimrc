@@ -20,7 +20,8 @@ set autoread " перечитывать изменённые файлы авто
 set t_Co=256 " использовать больше цветов в терминале
 set confirm " использовать диалоги вместо сообщений об ошибках
 set clipboard=unnamed " во избежание лишней путаницы использовать системный буфер обмена вместо буфера Vim
-set whichwrap=b,<,>,[,],l,h " перемещать курсор на следующую строку при нажатии на клавиши вправо-влево и пр.  set virtualedit=all " позволяет курсору выходить за пределы строки
+set whichwrap=b,<,>,[,],l,h " перемещать курсор на следующую строку при нажатии на клавиши вправо-влево и пр.  
+set virtualedit=all " позволяет курсору выходить за пределы строки
 set keymodel=startsel,stopsel "shift+стрелки - переходит в режим выделения
 set hidden " не выгружать буфер когда переключаешься на другой
 set mouse=a " включает поддержку мыши при работе в терминале (без GUI) (работает из коробки)
@@ -40,11 +41,9 @@ set pastetoggle=
 "подсвечивает все слова, которые совпадают со словом под курсором.
 "autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
 set spell spelllang=ru,en
-"set spell spelllang=ru_ru " Проверка орфографии русс.яз
+set spell spelllang=ru_ru " Проверка орфографии русс.яз
 set spellfile=~/.vim/spell/ru.utf-8.add " папка для русского словаря 
-" активация обертки для SQL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-nnoremap <leader>xc :r !mysql -uroot -psomepass -h somehost.com <<< `cat %` \| column -t<cr>
-"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+set spell nospell
 "" Подсвечивать табы и пробелы в конце строки-----------------------------
 set list " включить подсветку
 set listchars=tab:>-,trail:- " установить символы, которыми будет осуществляться подсветка
@@ -83,8 +82,6 @@ set foldlevel=2 " Первый уровень вложенности откры�
 set foldopen=all " автоматическое открытие сверток при заходе в них
 set tags=tags\ $VIMRUNTIME/systags " искать теги в текущй директории и в указанной (теги генерируются ctags)
 
- 
-
 "НАСТРОЙКИ ОТСТУПА----------------------------------------------------------
 set shiftwidth=4 " размер отступов (нажатие на << или >>)
 set tabstop=4 " ширина табуляции
@@ -97,13 +94,12 @@ set smartindent " Умные отступы (например, автоотст�
 " au FileType crontab,fstab,make set noexpandtab tabstop=8 shiftwidth=8
 "--------------------------------------------------------------------------------------
 
-
 "ВКЛЮЧЕНИЕ АВТОДОПЛНЕНИЯ ВВОДА (omnifunct) Ctrl+x, Ctrl+o
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType tt2html set omnifunc=htmlcomplete#CompleteTags
 "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 "autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 "autocmd FileType c set omnifunc=ccomplete#Complete
@@ -112,7 +108,6 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 " окно предварительного просмотра).
 "set completeopt=menu
 "----------------------------------------------------------------------------
-
 
 "НАСТРОЙКИ ПЕРЕКЛЮЧЕНИЯ РАСКЛАДОК КЛАВИАТУРЫ
 "" Взято у konishchevdmitry
@@ -127,8 +122,7 @@ imap <F3> 
 cmap <F3> 
 "--------------------------------------------------------------------------------
 
-
-"""" НАСТРОЙКИ ГОРЯЧИХ КЛАВИШ """"
+"НАСТРОЙКИ ГОРЯЧИХ КЛАВИШ-----------------------------------------
 
 " F2 - сохранить файл
 nmap <F2> :w<cr>
@@ -151,11 +145,20 @@ nmap H 0
 vmap L $
 vmap H 0
 
-"из режима редактирования переводит в нормальный режим ----- 
-inoremap jj <Esc>   
+"из режима редактирования переводит в нормальный режим ---
+inoremap jj <Esc>
 
 " авто-закрытие фигурных скобок
 inoremap {<CR>      {}<Left><CR><CR><Up><TAB>
+
+" Автозакрытие ковычек и скобок
+inoremap } {}<Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
+inoremap ` ``<Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap ) ();<Left><Left>
 
 " закрытие парного тега, добавление между тегами строки
 imap gg  <CR><UP><END><CR>
@@ -163,6 +166,16 @@ imap gg  <CR><UP><END><CR>
 " move vertically by visual line with j and k
 nnoremap j gj
 nnoremap k gk
+
+map <F7> :call Run() <cr>
+function Run()
+  exec "! node %"
+endfunction
+
+"" должен отрабатывать какиое-то автоисправление но нет
+""map <F4> :ALEFix <cr>
+""map <S-F4> :ALEFixSuggest <cr>
+
 """"""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""" Pluginstall >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -177,14 +190,20 @@ Plug 'mattn/emmet-vim' " клёвый ускоритель работы с те�
 Plug 'alvan/vim-closetag' " автозакрытие парных тегов
 Plug 'tpope/vim-surround' " Клевый плагин для окружения скобками, кавычками и прочим
 Plug 'vim-airline/vim-airline-themes' " поддержка тем для airline
-"Plug 'terryma/vim-multiple-cursors'   " одновременное редакитроваие слов
+Plug 'terryma/vim-multiple-cursors'   " одновременное редакитроваие слов
 Plug 'mhinz/vim-startify' " стартовый экран vim
 Plug 'thaerkh/vim-indentguides' " Табы подсвечивает черточкам
 Plug 'scrooloose/syntastic' " Асинхронная подсветка ошибок кода
-Plug 'joereynolds/SQHell.vim' " плагин обёртка для SQL
 Plug 'mechatroner/rainbow_csv' " подсветка синтаксиса для обычных файлов с данными
-Plug 'sukima/xmledit' " Для редаки=тирования XML
+"Plug 'sukima/xmledit' " Для редаки=тирования XML
+Plug 'dense-analysis/ale'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Плагины для Гит
+"Plug 'xuyuanp/nerdtree-git-plugin'
+"Plug 'junegunn/gv.vim'
+"Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
+
 """"""colorschemes "
 Plug 'seesleestak/duo-mini'
 Plug 'sainnhe/vim-color-forest-night'
@@ -199,9 +218,8 @@ Plug 'pineapplegiant/spaceduck'
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'sainnhe/gruvbox-material'
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Плагины для питона"""""""""""""""""""""""""""""""""""""
 " Plug 'tpope/vim-commentary' " что-то для комментариев
 " Plug 'numirias/semshi' " подсветка кода питона 
@@ -214,6 +232,7 @@ Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 " ДОПНАСТРОЙКА ПЛАГИНОВ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Открывает NERDtree по Ctrl+t---------------------------
 " nmap <F8> :TagbarToggle<CR> "вроде бы и так работает
@@ -228,17 +247,18 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extension#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 "let g:%{kite#statusline()}
-"""let g:airline_theme= 'hybrid' 
+""let g:airline_theme= 'hybrid' 
 "let g:airline_theme= 'onedark'
-let g:airline_theme= 'distinguished' 
+"let g:airline_theme= 'gruvbox' 
+"let g:airline_theme= 'distinguished' 
 "let g:airline_theme= 'fruit_punch'
-"let g:airline_theme= 'alduin'
-"let g:airline_theme= 'atomic'
-"let g:airline_theme= 'base16_ashes'
-"let g:airline_theme= 'base16_oceanicnext'
+""let g:airline_theme= 'alduin'
+let g:airline_theme= 'atomic'
+""let g:airline_theme= 'base16_ashes'
+""let g:airline_theme= 'base16_oceanicnext'
 "let g:airline_theme= 'biogoo'
-"let g:airline_theme = "tokyonight"
-
+""let g:airline_theme = 'tokyonight'
+"let g:airine_theme = 'everforest'
 "-----------------------------------------
 " Немножечко настройка тем--------------------
 "let g:edge_style = 'neon'
@@ -277,20 +297,21 @@ augroup VimCSS3Syntax
   autocmd FileType css setlocal iskeyword+=-
 augroup END
 """"""""""""""""""""""""""""""""""""""""
+
 """"""""""" Закладки на стартовом экране
-let g:startify_bookmarks = ['~/.vimrc', '~/www/статьи кск/news.html']
+let g:startify_bookmarks = ['~/.vimrc']
 "-------------------------------------------------------------------
  " Хоткеи для mutliple-cursor
-"let g:multi_cursor_use_default_mapping=1
+let g:multi_cursor_use_default_mapping=1
 " Default multicursor mapping
-"let g:multi_cursor_start_word_key      = '<C-n>' 
-"let g:multi_cursor_select_all_word_key = '<A-n>' 
-"let g:multi_cursor_start_key           = 'g<C-n>'
-"let g:multi_cursor_select_all_key      = 'g<A-n>'
-"let g:multi_cursor_next_key            = '<C-n>'
-"let g:multi_cursor_prev_key            = '<C-p>'
-"let g:multi_cursor_skip_key            = '<C-x>'
-"let g:multi_cursor_quit_key            = '<Esc>'
+let g:multi_cursor_start_word_key      = '<C-n>' 
+let g:multi_cursor_select_all_word_key = '<A-n>' 
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
 
 "----------------------------------------------------------------
 let g:indent_guides_enable_on_vim_startup = 1
@@ -308,31 +329,50 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "--------------------------------<<<<<<<<<<<<<<<<<<<<<
+" Донастройка ALE---------------->>>>>>>>>>>>>>>>>>>>>>>
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 1
+
+
 " ALE autocomletion with omni-completion""""""""""""""
 " Enable completion where available.
 " This setting must be set before ALE is loaded.
 "
 " You should not turn this setting on if you wish to use ALE as a completion
 " source for other completion plugins, like Deoplete.
-"let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+"
+"Переход к следующей ошибке
+nmap <silent> <C-e> <Plug>(ale_next_wrap) 
 
-"set omnifunc=ale#completion#OmniFunc
+" Showing the number of errors and warnings
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? 'OK' : printf(
+        \   '%d⨉ %d⚠ ',
+        \   all_non_errors,
+        \   all_errors
+        \)
+endfunction
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+
+" Making it prettier
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 "let g:slime_target = "vimterminal" " Помощь плагину vim-slime
 "let g:slime_vimterminal_cmd = "python"
 " --------------------------------------------------
-" донастройка hellsql
-let g:sqh_connections = {
-    \ 'default': {
-    \   'user': 'root',
-    \   'password': 'testing345',
-    \   'host': 'localhost'
-    \},
-    \ 'live': {
-    \   'user': 'root',
-    \   'password': 'jerw5Y^$Hdfj',
-    \   'host': '46.121.44.392'
-    \}
-\}
-"---------------------------------------------------------------
+
+" Активация плагина javascript-vim
+let g:javascript_plugin_flow = 1
+
 " Конец донастройки плагинов<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
