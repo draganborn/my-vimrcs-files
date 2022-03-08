@@ -1,0 +1,485 @@
+	---	I	---
+Tutorial for Emmet.vim
+
+    CLIMB UP    div+din>p>span+em^bq
+ <div></div>
+ <div>
+    <p><span><em></em></p>
+    <blockquote></blockquote>
+ <div>
+
+    GROUPING    div>(header>ul>li*2>a)+footer>p
+<div>
+    <header>
+        <ul>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+        </ul>
+    </header>
+    <footer>
+        <p></p>
+    </footer>
+</div>
+
+    ATTRIBUTES    p[tittle="Hello, world"]
+<p tittle="Hello, world"></p>
+
+     ITEM NUMBERING h$[titel=item$]{Header_$}*3 
+<h1 tittle="item1">Header_1</h1>
+<h2 tittle="item2">Header_2</h2>
+<h3 tittle="item3">Header_3</h3>
+
+    IMPLICIT TAGS   table>.row>.col  
+    <talbe>
+        <div class="row">
+        <div class="col"></div>
+    </div>
+</talbe>
+
+    CSS CNEAK PEEK
+pos  ------- 1 position:relative;
+pos:s ------ 2 position:static;
+pos:a ------ 3 position:absolute;
+pos:r ------ 4 position:relative;
+pos:f ------ 5 position:fixed;
+
+1. Expand an Abbreviation
+
+  Type the abbreviation as 'div>p#foo$*3>a' and type '<c-y>,'.
+  ---------------------
+  <div>
+      <p id="foo1">
+          <a href=""></a>
+      </p>
+      <p id="foo2">
+          <a href=""></a>
+      </p>
+      <p id="foo3">
+          <a href=""></a>
+      </p>
+  </div>
+  ---------------------
+
+2. Wrap with an Abbreviation
+
+  Write as below.
+  ---------------------
+  test1
+  test2
+  test3
+  ---------------------
+  Then do visual select(line wise) and type '<c-y>,'.
+  Once you get to the 'Tag:' prompt, type 'ul>li*'.
+  ---------------------
+  <ul>
+      <li>test1</li>
+      <li>test2</li>
+      <li>test3</li>
+  </ul>
+  ---------------------
+
+  If you type a tag, such as 'blockquote', then you'll see the following:
+  ---------------------
+  <blockquote>
+      test1
+      test2
+      test3
+  </blockquote>
+  ---------------------
+
+3. Balance a Tag Inward
+    type '<c-y>d' in insert mode.
+
+4. Balance a Tag Outward
+    type '<c-y>D' in insert mode.
+
+5. Go to the Next Edit Point
+    type '<c-y>n' in insert mode.
+
+6. Go to the Previous Edit Point
+    type '<c-y>N' in insert mode.
+
+7. Update an <img>’s Size
+
+    Move cursor to the img tag.
+  ---------------------
+  <img src="foo.png" />
+  ---------------------
+  Type '<c-y>i' on img tag
+  ---------------------
+  <img src="foo.png" width="32" height="48" />
+  ---------------------
+
+8. Merge Lines
+
+  select the lines, which include '<li>'
+  ---------------------
+  <ul>
+  	<li class="list1"></li>
+  	<li class="list2"></li>
+  	<li class="list3"></li>
+  </ul>
+  ---------------------
+  and then type '<c-y>m'
+  ---------------------
+  <ul>
+  	<li class="list1"></li><li class="list2"></li><li class="list3"></li>
+  </ul>
+  ---------------------
+
+9. Remove a Tag
+
+  Move cursor in block
+  ---------------------
+  <div class="foo">
+  	<a>cursor is here</a>
+  </div>
+  ---------------------
+  Type '<c-y>k' in insert mode.
+  ---------------------
+  <div class="foo">
+
+  </div>
+  ---------------------
+
+  And type '<c-y>k' in there again.
+  ---------------------
+
+  ---------------------
+
+10. Split/Join Tag
+
+  Move the cursor inside block
+  ---------------------
+  <div class="foo">
+  	cursor is here
+  </div>
+  ---------------------
+  Type '<c-y>j' in insert mode.
+  ---------------------
+  <div class="foo"/>
+  ---------------------
+
+  And then type '<c-y>j' in there again.
+  ---------------------
+  <div class="foo">
+  </div>
+  ---------------------
+
+11. Toggle Comment
+
+  Move cursor inside the block
+  ---------------------
+  <div>
+  	hello world
+  </div>
+  ---------------------
+  Type '<c-y>/' in insert mode.
+  ---------------------
+  <!-- <div>
+  	hello world
+  </div> -->
+  ---------------------
+  Type '<c-y>/' in there again.
+  ---------------------
+  <div>
+  	hello world
+  </div>
+  ---------------------
+
+12. Make an anchor from a URL
+
+  Move cursor to URL
+  ---------------------
+  http://www.google.com/
+  ---------------------
+  Type '<c-y>a'
+  ---------------------
+  <a href="http://www.google.com/">Google</a>
+  ---------------------
+
+13. Make some quoted text from a URL
+
+  Move cursor to the URL
+  ---------------------
+  http://github.com/
+  ---------------------
+  Type '<c-y>A'
+  ---------------------
+  <blockquote class="quote">
+  	<a href="http://github.com/">Secure source code hosting and collaborative 
+development - GitHub</a><br />
+  	<p>How does it work? Get up and running in seconds by forking a project, 
+pushing an existing repository...</p>
+  	<cite>http://github.com/</cite>
+  </blockquote>
+  ---------------------
+
+14. Installing emmet.vim for the language you are using:
+
+  # cd ~/.vim
+  # unzip emmet-vim.zip
+
+  Or if you are using pathogen.vim:
+
+  # cd ~/.vim/bundle # or make directory
+  # unzip /path/to/emmet-vim.zip
+
+  Or if you get the sources from the repository:
+
+  # cd ~/.vim/bundle # or make directory
+  # git clone http://github.com/mattn/emmet-vim.git
+
+15. Enable emmet.vim for the language you using.
+
+  You can customize the behavior of the languages you are using.
+
+  ---------------------
+  # cat >> ~/.vimrc
+  let g:user_emmet_settings = {
+  \  'php' : {
+  \    'extends' : 'html',
+  \    'filters' : 'c',
+  \  },
+  \  'xml' : {
+  \    'extends' : 'html',
+  \  },
+  \  'haml' : {
+  \    'extends' : 'html',
+  \  },
+  \}
+  -----------------------------------------------
+  
+  
+	---	II	---
+Press cs"' insideS<
+"Hello world!"
+to change it to
+'Hello world!'
+	Now press cs'<q> to change it to
+	<q>Hello world!</q>
+To go full circle, press cst" to get
+"Hello world!"
+	To remove the delimiters entirely, press ds".
+	Hello world!
+Now with the cursor on "Hello", press ysiw] (iw is a text object).
+[Hello] world!
+	add some space (use } instead of { for no space): cs]{
+	{ Hello } world!
+Now wrap the entire line in parentheses with yssb or yss).
+({ Hello } world!)
+	Revert to the original text: ds{ds)
+	Hello world!
+Emphasize hello: ysiw<em>
+<em>Hello</em> world!
+	Finally, let's try out visual mode. Press a capital V (for linewise visual 
+mode) followed by S<p class="important">.
+	<p class="important">
+  	    <em>Hello</em> world!
+	</p>
+
+--------------	vim-move	 ----------------
+<A-k>   Move current line/selection up
+<A-j>   Move current line/selection down
+<A-h>   Move current character/selection left
+<A-l>   Move current character/selection right
+
+------------	vim-multiple-cursor	------
+let g:multi_cursor_use_default_mapping=0
+" Default mapping
+let g:multi_cursor_start_word_key      	= '<C-n>'
+let g:multi_cursor_select_all_word_key 	= '<A-n>'
+let g:multi_cursor_start_key           	= 'g<C-n>'
+let g:multi_cursor_select_all_key      	= 'g<A-n>'
+let g:multi_cursor_next_key            	= '<C-n>'
+let g:multi_cursor_prev_key            	= '<C-p>'
+let g:multi_cursor_skip_key            	= '<C-x>'
+let g:multi_cursor_quit_key            	= '<Esc>'
+---------------------------------------------------------------------
+
+
+	---	III	---
+
+1. Vim Line Navigation
+Following are the four navigation that can be done line by line.
+
+k – navigate upwards
+j – navigate downwards
+l – navigate right side
+h – navigate left side
+
+By using the repeat factor in VIM we can do this operation for N times. For 
+example, when you want to
+go down by 10 lines, then type “10j”.
+
+Within a line if you want to navigate to different position, you have 4 other 
+options.
+
+0 – go to the starting of the current line.
+^ – go to the first non blank character of the line.
+$ – go to the end of the current line.
+g_ – go to the last non blank character of the line.
+
+2. Vim Screen Navigation
+Following are the three navigation which can be done in relation to text shown 
+in the screen.
+
+H – Go to the first line of current screen.
+M – Go to the middle line of current screen.
+L – Go to the last line of current screen.
+ctrl+f – Jump forward one full screen.
+ctrl+b – Jump backwards one full screen
+ctrl+d – Jump forward (down) a half screen
+ctrl+u – Jump back (up) one half screen
+
+3. Vim Special Navigation
+You may want to do some special navigation inside a file, which are:
+
+N% – Go to the Nth percentage line of the file.
+NG – Go to the Nth line of the file.
+G – Go to the end of the file.
+`” – Go to the position where you were in NORMAL MODE while last closing the 
+file.
+`^ – Go to the position where you were in INSERT MODE while last closing the 
+file.
+g – Go to the beginning of the file.
+
+4. Vim Word Navigation
+You may want to do several navigation in relation to the words, such as:
+
+e – go to the end of the current word.
+E – go to the end of the current WORD.
+b – go to the previous (before) word.
+B – go to the previous (before) WORD.
+w – go to the next word.
+W – go to the next WORD.
+
+WORD – WORD consists of a sequence of non-blank characters, separated with white 
+space.
+word – word consists of a sequence of letters, digits and underscores.
+
+Example to show the difference between WORD and word
+
+192.168.1.1 – single WORD
+192.168.1.1 – seven words.
+
+5. Vim Paragraph Navigation
+{ – Go to the beginning of the current paragraph. By pressing { again and again 
+move to the previous paragraph beginnings.
+} – Go to the end of the current paragraph. By pressing } again and again move 
+to the next paragraph end, and again.
+
+6. Vim Search Navigation
+/i – Search for a pattern which will you take you to the next occurrence of it.
+?i – Search for a pattern which will you take you to the previous occurrence of 
+it.
+* – Go to the next occurrence of the current word under the cursor.
+# – Go to the previous occurrence of the current word under the cursor.
+
+7. Vim Code Navigation
+% – Go to the matching braces, or parenthesis inside code.
+
+8. Vim Navigation from Command Line
+Vim +N filename: Go to the Nth line of the file after opening it.
+
+vim +10 /etc/passwd
+
+Vim +/pattern filename: Go to the particular pattern’s line inside the file, 
+first occurrence from first. In the following example, it will open the README 
+file and jump to the first occurrence of the word “install”.
+
+vim +/install README
+
+Vim +?patten filename: Go to the particular pattern’s line inside the file, 
+first occurrence from last. In the following example, it will open the README 
+file and jump to the last occurrence of the word “bug”.
+
+vim +?bug README
+
+9. Vim Navigation split windows
+
+<Ctrl>+<w> и ‘=’ - выравнивает размер всех разделённых окон
+
+Change the Split Screen Window Size of VIM
+There are several shortcuts to change the split screen window size of VIM.  You 
+can increase the width of your window by pressing <Ctrl>+<w> and then ‘>’ and 
+decrease the width by pressing <Ctrl>+<w> and then ‘<’.
+
+Now go to another window by pressing <Ctrl>+<w> and then any of <h> <j> <k> or 
+<l> depending on your choice. Now go to “Insert Mode” by pressing ‘i’ and 
+navigate to the place where you want to paste the text. Then go back to “Command 
+Mode” by pressing <ESC> and press <p> to paste the copied text.
+--------------------------------------------------------------------------------
+
+
+https://github.com/terryma/vim-multiple-cursors#installation
+let g:multi_cursor_use_default_mapping=0
+
+" Default mapping
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = '<A-n>'
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+-------------------------------------------------------------------------------
+
+Вот основные команды для работы с буферами:
+:bn следующий буфер
+:bp предыдущий
+:ls просмотреть открытые буферы
+:b имя_буфера переключиться на буфер, очень удобно комбинируется с табом, к примеру пишем :b domain, жмём таб и нам подставляется открытый iis_domain.cpp
+:bd удалить текущий буфер, правда стоит заметить, что если этот буфер единственное окно то vim закроется
+:bd имя_буфера удалить буфер по имени
+------------------------------------------------------------------------------
+
+Ctrl-w стрелочки :) — переместиться на окно влево/вправо/вверх/вниз
+Сtrl-w o — развернуть окно
+Ctrl-w c — закрыть
+Ctrl-w s — разделить окно по горизонтали
+Ctrl-w v — тоже, только по вертикали
+Ctrl-w ] — разделить и перейти на определение чего-то, что под курсором
+Ctrl-w f — разделить и в новом окне открыть файл путь к которому находится под курсором, очень удобно делать на инклюдах
+-----------------------------------------------------------------------------
+
+Дополнение в vim делается по Ctrl-n, Ctrl-p. Но мы можем указать какой тип дополнений хотим увидеть:
+Ctrl-x Ctrl-f — файлы, они ищутся в текущем каталоге
+Ctrl-x Ctrl-d — дефайны
+Ctrl-x Ctrl-i — слова из текущего и открытых файлов
+Ctrl-x Ctrl-k — из словаря
+Ctrl-x Ctrl-] — все тэги
+Ctrl-x Ctrl-o — omni completion, эдакий intellisense который работает замечательно с C, Python и т.д. но для работы C++ нужен сторонний плагин. Рекомендую.
+--------------------------------------------------------------------------
+
+Сворачивание (folding)
+Часто когда работаешь с большими файлами, особенно исходниками программ, тяжело окинуть быстрым взглядом все методы/функции т.к. их тело мешает обзору. В VIM есть удобная возможность сворачивать текстовые блоки в одну линию (для кода – все тело метода сворачивается в заголовок метода).
+
+VIM может сворачивать текстовые блоки по следующим правилам:
+
+ручное сворачивание по метке (описано в :help fold-manual)
+сворачивание на основании отступов в начале строк (описано в :help fold-indent)
+использование выражений для сворачивания (описано в :help fold-expr)
+сворачивание на основании синтаксиса (описано в :help fold-syntax)
+использование разницы – сворачивание не изменившегося текста (описано в :help fold-diff)
+вставка в тексте маркеров для обозначения точки сворачивания (описано в :help fold-marker)
+Для начала использования необходимо активировать возможность сворачивания :set foldenable Затем задать правило для сворачивания, например, :set foldmethod=indent (сворачивание на основании отступов в начале строк)
+
+Команды для создания свертки блоков
+zf#j - создает свертку от текущей позиции до # строк вниз
+zf/подстрока - создает свертку от текущей позиции и до первой найденной подстроки
+v/V и zf - выделение блока и создание свертки
+
+Команды для управления
+zc – свернуть блок
+zo – развернуть блок
+zM – закрыть все блоки
+zR – открыть все блоки
+za – инвертирование (если открыто – закрыть, если закрыто – открыть)
+zj - переход к следующей свертке
+zk - переход к предыдущей свертке
+zd - удалить свертку под курсором
+zD - удалить все свертки
+[z - перейти к началу текущей свертки
+]z - перейти к концу текущей свертки
